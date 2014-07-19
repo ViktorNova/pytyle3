@@ -36,6 +36,13 @@ margins = [ {'top': 0, 'bottom': 1, 'left': 0, 'right': 0} ]
 # Leave some empty space between windows
 gap = 0
 
+# How much should the gap change on increase and decrease
+gap_change = 5
+
+# Maximum and minimum gap allowed
+gap_max = 200
+gap_min = 0
+
 # Whether to send any debug information to stdout
 debug = False
 

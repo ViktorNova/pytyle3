@@ -78,6 +78,18 @@ class OrientLayout(Layout):
 
     # End abstract methods; begin OrientLayout specific methods
 
+    def expand_gap(self):
+        config.gap = config.gap + config.gap_change
+        if (config.gap > config.gap_max):
+            config.gap = config.gap_max
+        self.tile()
+
+    def contract_gap(self):
+        config.gap = config.gap - config.gap_change
+        if (config.gap < 0 or config.gap < config.gap_min):
+            config.gap = config.gap_min
+        self.tile()
+
     def decrease_master(self):
         self.proportion = max(0.0, self.proportion - config.proportion_change)
         self.tile()
