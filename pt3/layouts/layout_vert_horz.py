@@ -15,6 +15,10 @@ class OrientLayout(Layout):
         super(OrientLayout, self).__init__(desk)
         self.store = store.Store()
         self.proportion = 0.5
+        self.gap = getattr(config, 'gap', 0)
+        self.gap_change = getattr(config, 'gap_change', 5)
+        self.gap_max = getattr(config, 'gap_max', 200)
+        self.gap_min = getattr(config, 'gap_min', 0)        
 
     def add(self, c):
         debug('%s being added to %s' % (c, self))
@@ -79,15 +83,15 @@ class OrientLayout(Layout):
     # End abstract methods; begin OrientLayout specific methods
 
     def expand_gap(self):
-        config.gap = config.gap + config.gap_change
-        if (config.gap > config.gap_max):
-            config.gap = config.gap_max
+        self.gap = self.gap + self.gap_change
+        if (self.gap > self.gap_max):
+            self.gap = self.gap_max
         self.tile()
 
     def contract_gap(self):
-        config.gap = config.gap - config.gap_change
-        if (config.gap < 0 or config.gap < config.gap_min):
-            config.gap = config.gap_min
+        self.gap = self.gap - self.gap_change
+        if (self.gap < 0 or self.gap < self.gap_min):
+            self.gap = self.gap_min
         self.tile()
 
     def decrease_master(self):
@@ -213,7 +217,7 @@ class VerticalLayout(OrientLayout):
         mw = int(ww * self.proportion) # width of the master
         sx = mx + mw
         sw = ww - mw
-        g = config.gap # Gap between windows
+        g = self.gap # Gap between windows
 
         if mw <= 0 or mw > ww or sw <= 0 or sw > ww:
             return
@@ -251,7 +255,7 @@ class HorizontalLayout(OrientLayout):
         mh = int(wh * self.proportion)
         sy = my + mh
         sh = wh - mh
-        g = config.gap # Gap between windows
+        g = self.gap # Gap between windows
 
         if mh <= 0 or mh > wh or sh <= 0 or sh > wh:
             return
